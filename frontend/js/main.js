@@ -9,7 +9,7 @@ import GameMatcher from './matching.js';
 import CONFIG from './config.js';
 
 // Backend API URL for AI recommendations
-const BACKEND_URL = 'http://localhost:8000';
+const BACKEND_URL = ''; // Use relative URLs - nginx will proxy /api/* to backend
 
 class App {
     constructor() {
