@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Game Matchmaker | Find Games to Play Together</title>
+    <meta name="description"
+        content="Find common games among your Steam friends and discover new games to play together">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <h1>Steam Game Matchmaker</h1>
+                </div>
+                <p class="tagline">Find the perfect games to play with your friends</p>
+            </div>
+        </header>
+
+        <!-- API Key Setup -->
+        <section class="api-setup glass-card" id="apiSetup">
+            <h2>🔑 Steam API Key</h2>
+            <p>Enter your Steam Web API key to get started. <a href="https://steamcommunity.com/dev/apikey"
+                    target="_blank" rel="noopener">Get one here</a></p>
+            <div class="api-input-group">
+                <input type="password" id="apiKeyInput" placeholder="Enter your Steam API key" autocomplete="off">
+                <button id="saveApiKey" class="btn btn-primary">Save Key</button>
+            </div>
+            <p class="api-status" id="apiStatus"></p>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent" style="display: none;">
+            <!-- Friends Section -->
+            <section class="friends-section glass-card">
+                <h2>👥 Add Friends</h2>
+                <p>Search for Steam users by their custom URL name or Steam ID 64</p>
+                <div class="add-friend-form">
+                    <input type="text" id="friendInput"
+                        placeholder="Enter Steam username or ID (e.g., gabelogannewell)">
+                    <button id="searchFriendBtn" class="btn btn-primary">
+                        <span class="btn-text">🔍 Search</span>
+                        <span class="btn-loader" style="display: none;"></span>
+                    </button>
+                </div>
+                <div class="error-message" id="addFriendError"></div>
+
+                <!-- Search Preview -->
+                <div class="search-preview" id="searchPreview" style="display: none;">
+                    <div class="preview-card">
+                        <img src="" alt="" class="preview-avatar" id="previewAvatar">
+                        <div class="preview-info">
+                            <div class="preview-name" id="previewName"></div>
+                            <div class="preview-stats" id="previewStats"></div>
+                        </div>
+                        <div class="preview-actions">
+                            <button id="addPreviewBtn" class="btn btn-primary">✓ Add</button>
+                            <button id="cancelPreviewBtn" class="btn btn-danger">✕ Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friends List -->
+                <div class="friends-list" id="friendsList">
+                    <p class="empty-state">No friends added yet. Add some Steam users above!</p>
+                </div>
+            </section>
+
+            <!-- Match Button -->
+            <section class="match-section" id="matchSection" style="display: none;">
+                <button id="findMatchesBtn" class="btn btn-match">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    Find Common Games
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <!-- Common Games -->
+                <div class="results-group glass-card">
+                    <h2>🎮 Games Everyone Owns</h2>
+                    <p class="results-description">These games are in everyone's library - ready to play together!</p>
+                    <div class="games-grid" id="commonGamesGrid">
+                        <p class="empty-state">No common games found</p>
+                    </div>
+                </div>
+
+                <!-- Almost Matched Games -->
+                <div class="results-group glass-card" id="almostMatchedSection" style="display: none;">
+                    <h2>🤝 Almost There</h2>
+                    <p class="results-description">These games are owned by most of the group - maybe someone should
+                        pick them up?</p>
+                    <div class="games-grid" id="almostMatchedGrid"></div>
+                </div>
+
+                <!-- Genre Recommendations -->
+                <div class="results-group glass-card">
+                    <h2>💡 Shared Interests</h2>
+                    <p class="results-description">Popular genres among all friends</p>
+                    <div class="genres-list" id="sharedGenres">
+                        <p class="empty-state">Add friends to see shared interests</p>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="results-group glass-card ai-section" id="aiRecommendationsSection">
+                    <div class="ai-header">
+                        <h2>🤖 AI Recommendations</h2>
+                        <button id="getAiRecsBtn" class="btn btn-primary btn-ai">
+                            <span class="btn-text">✨ Get AI Suggestions</span>
+                            <span class="btn-loader" style="display: none;"></span>
+                        </button>
+                    </div>
+                    <p class="results-description">Get personalized game recommendations based on your group's
+                        preferences</p>
+                    <div class="ai-recommendations" id="aiRecommendations">
+                        <p class="empty-state">Click the button above to get AI-powered game suggestions!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p id="loadingText">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with ❤️ for Steam gamers | Not affiliated with Valve Corporation</p>
+        </footer>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

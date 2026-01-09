@@ -1,0 +1,265 @@
+############################
+# Secrets & Environment
+############################
+.env
+.env.*
+!.env.example
+.env.local
+.env.*.local
+*.env
+**/secrets/
+secrets.yaml
+secrets.yml
+
+############################
+# Python Virtual Environments
+############################
+# All possible venv variations
+venv/
+env/
+ENV/
+.venv/
+.env/
+virtualenv/
+.virtualenv/
+pyenv/
+.pyenv/
+pipenv/
+.pipenv/
+poetry-env/
+.conda/
+conda-env/
+
+# Python version management
+.python-version
+.python-versions
+pythonenv*
+pyvenv*/
+
+############################
+# Python Build & Cache
+############################
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dylib
+*.dll
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+develop-eggs/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.manifest
+*.spec
+.installed.cfg
+MANIFEST
+.Python
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+htmlcov/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+
+############################
+# UV Package Manager
+############################
+uv.lock
+.uv/
+
+############################
+# Node.js (if using)
+############################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+############################
+# IDEs & Editors
+############################
+# VSCode
+.vscode/
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+*.vim
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+############################
+# OS Files
+############################
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+############################
+# Docker
+############################
+docker-compose.override.yml
+.dockerignore
+*.tar
+*.tar.gz
+
+############################
+# Logs & Databases
+############################
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+logs/
+log/
+*.log.*
+
+############################
+# Temporary files
+############################
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.old
+*.orig
+.cache/
+tmp/
+temp/
+
+############################
+# SSL/TLS Certificates
+############################
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
+############################
+# API Keys & Credentials
+############################
+*apikey*
+*api-key*
+*secret*
+*password*
+credentials.json
+credentials.yaml
+token*.json
+.npmrc
+.pypirc
+
+############################
+# Build outputs
+############################
+*.exe
+*.out
+*.app
+*.o
+*.obj
+*.class
+
+############################
+# Archives
+############################
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+############################
+# Project specific
+############################
+# Add any project-specific ignores here

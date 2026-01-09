@@ -1,0 +1,46 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to Azure VM
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.AZURE_VM_HOST }}
+        username: ${{ secrets.AZURE_VM_USER }}
+        key: ${{ secrets.AZURE_VM_SSH_KEY }}
+        script: |
+          # Navigate to project directory or create it
+          cd /home/azureuser
+          
+          # Remove old directory if exists and clone fresh
+          rm -rf steam-game-matchmaking
+          git clone https://github.com/${{ github.repository }} steam-game-matchmaking
+          cd steam-game-matchmaking
+          
+          # Create .env file from secrets
+          cat > .env << EOF
+          STEAM_API_KEY=${{ secrets.STEAM_API_KEY }}
+          GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}
+          EOF
+          
+          # Stop and remove old containers
+          docker-compose down || true
+          
+          # Build and start new containers
+          docker-compose up -d --build
+          
+          # Clean up old images
+          docker image prune -f
+          
+          echo "Deployment complete! Application running on port 8002"
