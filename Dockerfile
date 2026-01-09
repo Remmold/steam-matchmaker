@@ -1,5 +1,8 @@
-# Multi-stage build for Steam Game Matchmaker
-FROM python:3.11-slim as backend-builder
+# Production build for Steam Game Matchmaker
+FROM python:3.11-slim
+
+# Install nginx for serving frontend and reverse proxy
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app/backend
@@ -8,19 +11,8 @@ WORKDIR /app/backend
 COPY backend/pyproject.toml ./
 COPY backend/*.py ./
 
-# Install dependencies using pip
+# Install Python dependencies
 RUN pip install --no-cache-dir fastapi uvicorn[standard] pydantic-ai python-dotenv groq
-
-
-# Production stage
-FROM python:3.11-slim
-
-# Install nginx for serving frontend and reverse proxy
-RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
-
-# Copy backend from builder
-WORKDIR /app/backend
-COPY --from=backend-builder /app/backend /app/backend
 
 # Copy frontend files
 COPY frontend /usr/share/nginx/html
@@ -28,11 +20,11 @@ COPY frontend /usr/share/nginx/html
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port
-EXPOSE 80
-
-# Start script
+# Copy and setup entrypoint script
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
+
+# Expose port
+EXPOSE 80
 
 CMD ["/docker-entrypoint.sh"]
